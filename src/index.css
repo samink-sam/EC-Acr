@@ -1,0 +1,62 @@
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/noto-sans-bengali/400.css';
+@import '@fontsource/noto-sans-bengali/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 150 18% 97%;
+    --foreground: 163 16% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 163 16% 12%;
+    --primary: 164 100% 21%;
+    --primary-dark: 164 100% 15%;
+    --primary-foreground: 0 0% 100%;
+    --destructive: 353 89% 56%;
+    --destructive-foreground: 0 0% 100%;
+    --muted: 150 14% 92%;
+    --muted-foreground: 154 11% 39%;
+    --accent: 150 22% 94%;
+    --accent-foreground: 163 16% 12%;
+    --gold: 45 56% 46%;
+    --border: 150 20% 90%;
+    --input: 150 20% 90%;
+    --ring: 164 100% 21%;
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply min-h-screen bg-background font-sans text-foreground antialiased;
+  }
+
+  a {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+}
+
+.skeleton {
+  @apply animate-pulse rounded-md bg-muted;
+}
+
+@media print {
+  header,
+  footer,
+  nav,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+}
