@@ -1,75 +1,75 @@
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
-import { RotateCcw, ShieldCheck } from 'lucide-react'
-import type { Role } from '@/data/types'
-import { Button } from '@/components/ui/button'
-import { TooltipProvider } from '@/components/ui/tooltip'
-import { NotificationBell } from '@/components/NotificationBell'
-import { RoleSwitcher } from '@/components/RoleSwitcher'
-import { Toasts } from '@/components/Toasts'
-import { roleLabels } from '@/lib/formatters'
-import { useDemoStore } from '@/store'
-import ecLogo from '@/assets/ec-logo.webp'
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { RotateCcw, ShieldCheck } from "lucide-react";
+import type { Role } from "@/data/types";
+import { Button } from "@/components/ui/button";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { NotificationBell } from "@/components/NotificationBell";
+import { RoleSwitcher } from "@/components/RoleSwitcher";
+import { Toasts } from "@/components/Toasts";
+import { roleLabels } from "@/lib/formatters";
+import { useDemoStore } from "@/store";
+import ecLogo from "@/assets/ec-logo.webp";
 
-const navItems: Array<{ to: string; label: string; roles: Role[] | 'all' }> = [
-  { to: '/applicant', label: 'My Applications', roles: ['applicant'] },
-  { to: '/applicant/apply', label: 'New Application', roles: ['applicant'] },
-  { to: '/applicant/profile', label: 'Profile', roles: ['applicant'] },
-  { to: '/superadmin/dashboard', label: 'Dashboard', roles: ['super_admin'] },
-  { to: '/superadmin/users', label: 'Users & Roles', roles: ['super_admin'] },
+const navItems: Array<{ to: string; label: string; roles: Role[] | "all" }> = [
+  { to: "/applicant", label: "My Applications", roles: ["applicant"] },
+  { to: "/applicant/apply", label: "New Application", roles: ["applicant"] },
+  { to: "/applicant/profile", label: "Profile", roles: ["applicant"] },
+  { to: "/superadmin/dashboard", label: "Dashboard", roles: ["super_admin"] },
+  { to: "/superadmin/users", label: "Users & Roles", roles: ["super_admin"] },
   {
-    to: '/superadmin/master-data',
-    label: 'Master Data',
-    roles: ['super_admin'],
+    to: "/superadmin/master-data",
+    label: "Master Data",
+    roles: ["super_admin"],
   },
-  { to: '/superadmin/settings', label: 'Settings', roles: ['super_admin'] },
+  { to: "/superadmin/settings", label: "Settings", roles: ["super_admin"] },
   {
-    to: '/superadmin/applications',
-    label: 'Applications',
-    roles: ['super_admin'],
+    to: "/superadmin/applications",
+    label: "Applications",
+    roles: ["super_admin"],
   },
-  { to: '/superadmin/cards', label: 'Cards', roles: ['super_admin'] },
-  { to: '/superadmin/audit', label: 'Audit', roles: ['super_admin'] },
+  { to: "/superadmin/cards", label: "Cards", roles: ["super_admin"] },
+  { to: "/superadmin/audit", label: "Audit", roles: ["super_admin"] },
   {
-    to: '/superadmin/notifications',
-    label: 'Notifications',
-    roles: ['super_admin'],
-  },
-  {
-    to: '/admin/review',
-    label: 'Review Queue',
-    roles: ['central_admin', 'returning_officer'],
+    to: "/superadmin/notifications",
+    label: "Notifications",
+    roles: ["super_admin"],
   },
   {
-    to: '/reports',
-    label: 'Reports',
-    roles: ['central_admin', 'returning_officer'],
+    to: "/admin/review",
+    label: "Review Queue",
+    roles: ["central_admin", "returning_officer"],
   },
   {
-    to: '/notifications',
-    label: 'Notifications',
-    roles: ['central_admin', 'returning_officer'],
+    to: "/reports",
+    label: "Reports",
+    roles: ["central_admin", "returning_officer"],
   },
-  { to: '/verify', label: 'Verify Card', roles: ['verifier'] },
-]
+  {
+    to: "/notifications",
+    label: "Notifications",
+    roles: ["central_admin", "returning_officer"],
+  },
+  { to: "/verify", label: "Verify Card", roles: ["verifier"] },
+];
 
 export function RootLayout() {
-  const reset = useDemoStore((state) => state.resetDemoData)
-  const role = useDemoStore((state) => state.activeRole)
-  const isAuthenticated = useDemoStore((state) => state.isAuthenticated)
-  const location = useLocation()
+  const reset = useDemoStore((state) => state.resetDemoData);
+  const role = useDemoStore((state) => state.activeRole);
+  const isAuthenticated = useDemoStore((state) => state.isAuthenticated);
+  const location = useLocation();
   const visibleNavItems = navItems.filter(
-    (item) => item.roles === 'all' || item.roles.includes(role),
-  )
+    (item) => item.roles === "all" || item.roles.includes(role),
+  );
   const isDashboardPath =
-    location.pathname.startsWith('/applicant') ||
-    location.pathname.startsWith('/admin') ||
-    location.pathname.startsWith('/reports') ||
-    location.pathname.startsWith('/notifications') ||
-    location.pathname.startsWith('/super-admin') ||
-    location.pathname.startsWith('/superadmin') ||
-    location.pathname.startsWith('/verify')
-  const showPortalNav = isAuthenticated && isDashboardPath
-  const showRoleSwitcher = !location.pathname.startsWith('/login')
+    location.pathname.startsWith("/applicant") ||
+    location.pathname.startsWith("/admin") ||
+    location.pathname.startsWith("/reports") ||
+    location.pathname.startsWith("/notifications") ||
+    location.pathname.startsWith("/super-admin") ||
+    location.pathname.startsWith("/superadmin") ||
+    location.pathname.startsWith("/verify");
+  const showPortalNav = isAuthenticated && isDashboardPath;
+  const showRoleSwitcher = !location.pathname.startsWith("/login");
 
   return (
     <TooltipProvider>
@@ -99,7 +99,7 @@ export function RootLayout() {
             </div>
             <div className="flex flex-wrap items-center gap-2">
               {showRoleSwitcher ? <RoleSwitcher /> : null}
-              <NotificationBell />
+              {isAuthenticated ? <NotificationBell /> : null}
               <Button onClick={reset} title="Reset demo data" variant="outline">
                 <RotateCcw className="h-4 w-4" />
                 Reset demo data
@@ -128,8 +128,8 @@ export function RootLayout() {
                       className={({ isActive }) =>
                         `rounded-md px-3 py-2.5 text-sm font-medium no-underline transition ${
                           isActive
-                            ? 'bg-primary text-primary-foreground'
-                            : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                            ? "bg-primary text-primary-foreground"
+                            : "text-muted-foreground hover:bg-accent hover:text-foreground"
                         }`
                       }
                       key={item.to}
@@ -155,8 +155,8 @@ export function RootLayout() {
                       className={({ isActive }) =>
                         `whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium no-underline ${
                           isActive
-                            ? 'bg-primary text-primary-foreground'
-                            : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                            ? "bg-primary text-primary-foreground"
+                            : "text-muted-foreground hover:bg-accent hover:text-foreground"
                         }`
                       }
                       key={item.to}
@@ -182,5 +182,5 @@ export function RootLayout() {
       </div>
       <Toasts />
     </TooltipProvider>
-  )
+  );
 }
